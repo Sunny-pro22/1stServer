@@ -102,4 +102,12 @@ app.post('/feedback/:token/submit', express.urlencoded({ extended: true }), asyn
 });
 
 const PORT = process.env.PORT || 5000;
-connectDB().then(() => app.listen(PORT, () => console.log(`API on :${PORT}`)));
+
+connectDB().then(() => {
+    app.listen(Number(PORT), "0.0.0.0", () => {
+        console.log(`API running on port ${PORT}`);
+    });
+}).catch((err) => {
+    console.error("Database connection failed:", err);
+    process.exit(1);
+});
